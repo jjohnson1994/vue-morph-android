@@ -141,7 +141,7 @@ Vue.component('checkbox', {
       return {
         uid: this._uid,
         parent: this.$parent._uid,
-        checked: this.value,
+        checked: this.checked,
         text: this.text,
         ...this.styles,
       };

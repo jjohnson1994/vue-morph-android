@@ -31,8 +31,11 @@ public class CheckBoxWidget extends AppCompatCheckBox implements NativeInputWidg
 
     public void update(JSONObject description) {
         try {
+
+            Log.d("Checkbox", "Got description " + description.toString());
             String text = description.getString("text");
-            Boolean checked  = description.getBoolean("value");
+            String _checked  = description.getString("checked");
+            Boolean checked = Boolean.parseBoolean(_checked);
 
             Log.d("Checkbox", "Got new text " + text);
             this.setText(text);
