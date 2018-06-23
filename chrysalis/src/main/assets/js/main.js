@@ -250,7 +250,7 @@ function dispatchOnChange(params) {
 var app = new Vue({
   el: '#app',
   data: {
-    message: 'VueNative!',
+    message: 'Chrysalis!',
     total: 0,
     numberEntered: 0,
     totalsHistory: [],
