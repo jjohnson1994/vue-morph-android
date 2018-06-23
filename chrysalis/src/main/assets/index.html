@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>VueNative</title>
+</head>
+<body>
+<linearlayout id="app">
+<scrollview>
+    <linearlayout>
+        <textview :text="message"></textview>
+
+        <textview :text="'Total: ' + total"></textview>
+        <edittext v-model="numberEntered" :styles="{ inputType: 'number' }"></edittext>
+
+        <linearlayout>
+            <linearlayout>
+                <btn v-on:click.native="plus" text="➕"></btn>
+                <btn v-on:click.native="subtract" text="➖"></btn>
+            </linearlayout>
+            <linearlayout>
+                <btn v-on:click.native="multiply" text="✖️"></btn>
+                <btn v-on:click.native="divide" text="➗"></btn>
+            </linearlayout>
+            <btn v-on:click.native="sayHello('Hello!')" text="Say Hello"></btn>
+        </linearlayout>
+
+        <checkbox v-model="checkboxVal" :text="checkboxVal"></checkbox>
+        <textview :text="checkboxVal"></textview>
+
+        <linearlayout>
+            <textview v-for="i in totalsHistory" :text="i"></textview>
+        </linearlayout>
+        <textview text="history"></textview>
+    </linearlayout>
+</scrollview>
+</linearlayout>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
