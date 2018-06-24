@@ -7,6 +7,9 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.webkit.WebView;
+import android.widget.EditText;
+
+import com.example.jamesjohnson.chrysalis.FullscreenActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,16 +69,23 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
             String value = null;
 
             try {
-                value = (String) styles.getString(key);
+                value = styles.getString(key);
             } catch (JSONException e) {
                 Log.e("EditTextWidget", "Could not get style value");
             }
 
             switch (key) {
                 case "inputType":
-                    Log.d("Setting Style", key + " : " + value);
-                    if (value == "number") {
-                        super.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    Log.d("Edit Text Setting Style", key + " : " + value);
+                    if (value.equals("number")) {
+                        final AppCompatEditText componentReference = this;
+                        ((FullscreenActivity) getContext()).runOnUIThread(
+                            new Runnable() {
+                                public void run() {
+                                    componentReference.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                }
+                            }
+                        );
                     }
                     break;
             }
