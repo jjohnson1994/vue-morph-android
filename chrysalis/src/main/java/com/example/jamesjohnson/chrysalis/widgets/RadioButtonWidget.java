@@ -2,9 +2,11 @@ package com.example.jamesjohnson.chrysalis.widgets;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,12 +15,12 @@ import org.json.JSONObject;
  * Created by jamesjohnson on 19/06/2018.
  */
 
-public class CheckBoxWidget extends AppCompatCheckBox implements NativeInputWidget {
+public class RadioButtonWidget extends AppCompatRadioButton implements NativeInputWidget {
 
     private WebView webView;
     private String uid;
 
-    public CheckBoxWidget(Context context, final WebView webView) {
+    public RadioButtonWidget(Context context, final WebView webView) {
         super(context);
 
         this.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -32,16 +34,16 @@ public class CheckBoxWidget extends AppCompatCheckBox implements NativeInputWidg
     public void update(JSONObject description) {
         try {
 
-            Log.d("Checkbox", "Got description " + description.toString());
+            Log.d("RadioButton", "Got description " + description.toString());
             String text = description.getString("text");
             String _checked  = description.getString("checked");
             Boolean checked = Boolean.parseBoolean(_checked);
 
-            Log.d("Checkbox", "Got new text " + text);
+            Log.d("RadioButton", "Got new text " + text);
             this.setText(text);
             this.setChecked(checked);
         } catch (JSONException e) {
-            Log.d("Checkbox", "Error Reading Description " + e);
+            Log.d("RadioButton", "Error Reading Description " + e);
         }
     }
 
@@ -55,6 +57,6 @@ public class CheckBoxWidget extends AppCompatCheckBox implements NativeInputWidg
     }
 
     public void setStyles(JSONObject styles) {
-        Log.d("CheckBoxWidget", "SetStyles" + styles.length());
+        Log.d("RadioButton", "SetStyles" + styles.length());
     }
 }

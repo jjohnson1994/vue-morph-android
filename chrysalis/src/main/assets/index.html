@@ -6,7 +6,20 @@
 <linearlayout id="app">
 <scrollview>
     <linearlayout>
-        <textview :text="message"></textview>
+        <!--<radiobutton v-model="checkboxVal" :text="checkboxVal"></radiobutton>-->
+
+        <textview text="Edit Text"></textview>
+
+        <textview :text="numberInput"></textview>
+        <edittext v-model="numberInput" :styles="{ inputType: 'number' }"></edittext>
+
+        <textview :text="emailInput"></textview>
+        <edittext v-model="emailInput" :styles="{ inputType: 'email' }"></edittext>
+
+        <textview :text="passwordInput"></textview>
+        <edittext v-model="passwordInput" :styles="{ inputType: 'password' }"></edittext>
+
+        <textview text="Calculator App"></textview>
 
         <textview :text="'Total: ' + total"></textview>
         <edittext v-model="numberEntered" :styles="{ inputType: 'number' }"></edittext>

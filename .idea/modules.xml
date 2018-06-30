@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Chrysalis.iml" filepath="$PROJECT_DIR$/Chrysalis.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chrysalis/app.iml" filepath="$PROJECT_DIR$/chrysalis/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chrysalis/chrysalis.iml" filepath="$PROJECT_DIR$/chrysalis/chrysalis.iml" />
     </modules>
   </component>
 </project>

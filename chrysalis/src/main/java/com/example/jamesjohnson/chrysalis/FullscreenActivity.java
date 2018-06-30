@@ -14,6 +14,8 @@ import com.example.jamesjohnson.chrysalis.widgets.CheckBoxWidget;
 import com.example.jamesjohnson.chrysalis.widgets.EditTextWidget;
 import com.example.jamesjohnson.chrysalis.widgets.LinearLayoutWidget;
 import com.example.jamesjohnson.chrysalis.widgets.NativeWidget;
+import com.example.jamesjohnson.chrysalis.widgets.RadioButtonWidget;
+import com.example.jamesjohnson.chrysalis.widgets.RadioGroupWidget;
 import com.example.jamesjohnson.chrysalis.widgets.ScrollViewWidget;
 import com.example.jamesjohnson.chrysalis.widgets.TextViewWidget;
 import com.example.jamesjohnson.chrysalis.widgets.ButtonWidget;
@@ -123,6 +125,13 @@ public class FullscreenActivity extends AppCompatActivity {
                 newView = new CheckBoxWidget(this, webView);
                 ((CheckBoxWidget) newView).setText(text);
                 break;
+            case "radiobutton":
+                newView = new RadioButtonWidget(this, webView);
+                ((RadioButtonWidget) newView).setText(text);
+                break;
+            case "radiogroup":
+                newView = new RadioGroupWidget(this);
+                break;
             default:
                 newView = new TextViewWidget(this);
                 ((TextView) newView).setText("No Matching Components for Tag");
@@ -155,6 +164,10 @@ public class FullscreenActivity extends AppCompatActivity {
         } catch (JSONException e) {
             Log.e("drawFullApp", "Could not get children" + e);
         }
+    }
+
+    public void runOnUIThread(Runnable run) {
+        runOnUiThread(run);
     }
 
     public void addViewToViewGroup(final View view, final ViewGroup viewGroup) {

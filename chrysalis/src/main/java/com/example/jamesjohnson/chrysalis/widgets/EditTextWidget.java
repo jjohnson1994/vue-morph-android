@@ -77,14 +77,33 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
             switch (key) {
                 case "inputType":
                     Log.d("Edit Text Setting Style", key + " : " + value);
+                    final AppCompatEditText componentReference = this;
                     if (value.equals("number")) {
-                        final AppCompatEditText componentReference = this;
+                        // Set input type to number
                         ((FullscreenActivity) getContext()).runOnUIThread(
                             new Runnable() {
                                 public void run() {
                                     componentReference.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                 }
                             }
+                        );
+                    } else if(value.equals("email")) {
+                        // Set input type to email
+                        ((FullscreenActivity) getContext()).runOnUIThread(
+                                new Runnable() {
+                                    public void run() {
+                                        componentReference.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                                    }
+                                }
+                        );
+                    } else if(value.equals("password")) {
+                        // Set input type to password
+                        ((FullscreenActivity) getContext()).runOnUIThread(
+                                new Runnable() {
+                                    public void run() {
+                                        componentReference.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                                    }
+                                }
                         );
                     }
                     break;

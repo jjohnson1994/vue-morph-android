@@ -153,6 +153,69 @@ Vue.component('checkbox', {
   },
 });
 
+Vue.component('radiobutton', {
+  template: '<label><input type="radio" :value="checked"/>{{ text }}</label>',
+  props: {
+    text: {
+      required: false,
+      default: '',
+    },
+    styles: {
+      type: Object,
+      required: false,
+      default: () => {},
+    },
+  },
+  data: function() {
+    return {
+      checked: this.value,
+    };
+  },
+  methods: {
+    setValue(checked) {
+      console.log('is checked', checked, this.value);
+      this.checked = checked;
+      this.$emit('input', checked);
+    },
+    describe: function() {
+      return {
+        uid: this._uid,
+        parent: this.$parent._uid,
+        checked: this.checked,
+        text: this.text,
+        ...this.styles,
+      };
+    },
+  },
+  updated: function() {
+    console.log("Radio Button, Passing Description", this.describe());
+    Android.onAppUpdate(JSON.stringify(this.describe()));
+  },
+});
+
+Vue.component('radiogroup', {
+  template: '<div><slot></slot></div>',
+  props: {
+    styles: {
+      type: Object,
+      required: false,
+      default: () => {},
+    },
+  },
+  methods: {
+    describe: function() {
+      return {
+        uid: this._uid,
+        parent: this.$parent._uid,
+        ...this.styles,
+      };
+    },
+  },
+  updated: function() {
+    Android.onAppUpdate(JSON.stringify(this.describe()));
+  },
+});
+
 Vue.component('edittext', {
   template: '<input :value="text"/>',
   props: {
@@ -177,7 +240,7 @@ Vue.component('edittext', {
         uid: this._uid,
         parent: this.$parent._uid,
         text: this.text,
-        ...this.styles,
+        styles: this.styles,
       };
     },
   },
@@ -255,6 +318,9 @@ var app = new Vue({
     numberEntered: 0,
     totalsHistory: [],
     checkboxVal: false,
+    numberInput: 0,
+    passwordInput: '',
+    emailInput: '',
   },
   created: function() {
     window.setTimeout(() => {

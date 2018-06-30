@@ -2,6 +2,7 @@ package com.example.jamesjohnson.chrysalis.widgets;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 
 import org.json.JSONObject;
@@ -10,9 +11,9 @@ import org.json.JSONObject;
  * Created by jamesjohnson on 21/06/2018.
  */
 
-public class ScrollViewWidget extends ScrollView implements NativeWidget {
+public class RadioGroupWidget extends RadioGroup implements NativeWidget {
 
-    public ScrollViewWidget(Context context) {
+    public RadioGroupWidget(Context context) {
         super(context);
     }
 
@@ -25,6 +26,6 @@ public class ScrollViewWidget extends ScrollView implements NativeWidget {
     }
 
     public void setStyles(JSONObject styles) {
-        Log.d("LinearLayoutWidget", "SetStyles" + styles.length());
+        Log.d("RadioGroupWidget", "SetStyles" + styles.length());
     }
 }
