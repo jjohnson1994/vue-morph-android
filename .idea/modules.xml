@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Chrysalis.iml" filepath="$PROJECT_DIR$/Chrysalis.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chrysalis/chrysalis.iml" filepath="$PROJECT_DIR$/chrysalis/chrysalis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Vue-Morph-Android.iml" filepath="$PROJECT_DIR$/Vue-Morph-Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vue-morph/chrysalis.iml" filepath="$PROJECT_DIR$/vue-morph/chrysalis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vue-morph/vue-morph.iml" filepath="$PROJECT_DIR$/vue-morph/vue-morph.iml" />
     </modules>
   </component>
 </project>

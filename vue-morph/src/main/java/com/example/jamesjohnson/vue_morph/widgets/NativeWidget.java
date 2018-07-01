@@ -1,0 +1,13 @@
+package com.example.jamesjohnson.vue_morph.widgets;
+
+import org.json.JSONObject;
+
+/**
+ * Created by jamesjohnson on 19/06/2018.
+ */
+
+public interface NativeWidget {
+    public void setUid(String uid);
+    public void setStyles(JSONObject styles);
+    public void update(JSONObject description);
+}
