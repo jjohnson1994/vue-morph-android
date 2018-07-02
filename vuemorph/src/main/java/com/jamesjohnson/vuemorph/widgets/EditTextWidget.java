@@ -8,7 +8,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.webkit.WebView;
 
-import com.example.jamesjohnson.morph_view.FullscreenActivity;
+import com.jamesjohnson.vuemorph.VueMorph;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,9 +23,11 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
 
     private WebView webView;
     private String uid;
+    private VueMorph vueMorph;
 
-    public EditTextWidget(Context context, final WebView webView) {
-        super(context);
+    public EditTextWidget(VueMorph vueMorph, final WebView webView) {
+        super(vueMorph.getContext());
+        this.vueMorph = vueMorph;
 
         this.addTextChangedListener(new TextWatcher() {
             @Override
@@ -79,7 +81,7 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
                     final AppCompatEditText componentReference = this;
                     if (value.equals("number")) {
                         // Set input type to number
-                        ((FullscreenActivity) getContext()).runOnUIThread(
+                        vueMorph.runOnUIThread(
                             new Runnable() {
                                 public void run() {
                                     componentReference.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -88,7 +90,7 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
                         );
                     } else if(value.equals("email")) {
                         // Set input type to email
-                        ((FullscreenActivity) getContext()).runOnUIThread(
+                        vueMorph.runOnUIThread(
                                 new Runnable() {
                                     public void run() {
                                         componentReference.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -97,7 +99,7 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
                         );
                     } else if(value.equals("password")) {
                         // Set input type to password
-                        ((FullscreenActivity) getContext()).runOnUIThread(
+                        vueMorph.runOnUIThread(
                                 new Runnable() {
                                     public void run() {
                                         componentReference.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);

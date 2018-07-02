@@ -1,5 +1,8 @@
 package com.jamesjohnson.vuemorph;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -16,10 +19,12 @@ import org.json.JSONObject;
 
 public class WebAppInterface {
     VueMorph vueMorph;
+    AppCompatActivity context;
 
     /** Instantiate the interface and set the context */
-    WebAppInterface(VueMorph v) {
+    WebAppInterface(VueMorph v, AppCompatActivity c) {
         vueMorph = v;
+        context = c;
     }
 
     /** Show a toast from the web page */
@@ -53,12 +58,12 @@ public class WebAppInterface {
 
             int widgetId = Integer.parseInt(description.getString("uid"));
             int parent = Integer.parseInt(description.getString("parent"));
-            NativeWidget widget = mContext.findViewById(widgetId);
+            NativeWidget widget = context.findViewById(widgetId);
 
             if (widget != null) {
                 widget.update(description);
             } else {
-                mContext.drawFullApp(description, (ViewGroup) mContext.findViewById(parent));
+                vueMorph.drawFullApp(description, (ViewGroup) context.findViewById(parent));
             }
         } catch (JSONException e) {
             Log.d("WebAppInterface", "Could not get description: " + e);

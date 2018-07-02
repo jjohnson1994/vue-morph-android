@@ -1,6 +1,7 @@
 package com.jamesjohnson.vuemorph;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +26,19 @@ import org.json.JSONObject;
 public class VueMorph extends LinearLayout {
     LinearLayout appLayout;
     WebView webView;
+    AppCompatActivity context;
 
-    public VueMorph(Context context) {
+    public VueMorph(AppCompatActivity context) {
         super(context);
+
+        this.context = context;
 
         // Setup WebView, where JS app is run
 //        webView = findViewById(R.id.webview);
         webView = new WebView(context);
         webView.setClickable(true);
         webView.setWebContentsDebuggingEnabled(true);
-        webView.addJavascriptInterface(new WebAppInterface(this), "Android");
+        webView.addJavascriptInterface(new WebAppInterface(this, context), "Android");
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -123,7 +127,7 @@ public class VueMorph extends LinearLayout {
                 ((ButtonWidget) newView).setText(text);
                 break;
             case "EDITTEXT":
-                newView = new EditTextWidget(this.getContext(), webView);
+                newView = new EditTextWidget(this, webView);
                 break;
             case "CHECKBOX":
                 newView = new CheckBoxWidget(this.getContext(), webView);
@@ -154,7 +158,7 @@ public class VueMorph extends LinearLayout {
         if (parent != null) {
             addViewToViewGroup(newView, parent);
         } else {
-            addViewToViewGroup(newView, appLayout);
+            addViewToViewGroup(newView, this);
         }
 
         // Call this method about with the Views children
@@ -171,11 +175,11 @@ public class VueMorph extends LinearLayout {
     }
 
     public void runOnUIThread(Runnable run) {
-        runOnUiThread(run);
+        context.runOnUiThread(run);
     }
 
     public void addViewToViewGroup(final View view, final ViewGroup viewGroup) {
-        runOnUiThread(new Runnable() {
+        runOnUIThread(new Runnable() {
             public void run() {
                 viewGroup.addView(view);
             }
@@ -184,7 +188,7 @@ public class VueMorph extends LinearLayout {
 
     // Clear app layout
     public void clear() {
-        runOnUiThread(new Runnable() {
+        runOnUIThread(new Runnable() {
             public void run() {
                 if (appLayout.getChildCount() > 0) {
                     appLayout.removeAllViews();
