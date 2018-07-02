@@ -1,1 +1,1 @@
-include ':vue-morph'
+include ':morph-view', ':vuemorph'

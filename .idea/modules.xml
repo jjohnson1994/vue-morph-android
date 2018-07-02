@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Vue-Morph-Android.iml" filepath="$PROJECT_DIR$/Vue-Morph-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/vue-morph/chrysalis.iml" filepath="$PROJECT_DIR$/vue-morph/chrysalis.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vue-morph/vue-morph.iml" filepath="$PROJECT_DIR$/vue-morph/vue-morph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/morph-view/vue-morph.iml" filepath="$PROJECT_DIR$/morph-view/vue-morph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vuemorph/vuemorph.iml" filepath="$PROJECT_DIR$/vuemorph/vuemorph.iml" />
     </modules>
   </component>
 </project>
