@@ -1,7 +1,5 @@
 package com.jamesjohnson.vuemorph;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -37,7 +35,7 @@ public class WebAppInterface {
     @JavascriptInterface
     public void created(String app) {
         try {
-            JSONObject json = (JSONObject) new JSONObject(app);
+            JSONObject json = new JSONObject(app);
             Log.d("created", "json" + json.length());
 
             vueMorph.drawFullApp(json, null);
@@ -54,7 +52,7 @@ public class WebAppInterface {
     public void onAppUpdate(String _description) {
         Log.d("onAppUpdate", _description);
         try {
-            JSONObject description = (JSONObject) new JSONObject(_description);
+            JSONObject description = new JSONObject(_description);
 
             int widgetId = Integer.parseInt(description.getString("uid"));
             int parent = Integer.parseInt(description.getString("parent"));

@@ -12,7 +12,9 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fullscreen);
+
+        // Set the Apps layout to use the Vue Morph Layout (Mostly an empty LinearLayout)
+        setContentView(com.jamesjohnson.vuemorph.R.layout.activity_fullscreen);
 
         // Create a new instance of Vue Morph
         VueMorph vueMorph = new VueMorph(this);
