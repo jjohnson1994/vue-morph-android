@@ -1,6 +1,7 @@
 package com.jamesjohnson.vuemorph;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +35,6 @@ public class VueMorph extends LinearLayout {
         this.context = context;
 
         // Setup WebView, where JS app is run
-//        webView = findViewById(R.id.webview);
         webView = new WebView(context);
         webView.setClickable(true);
         webView.setWebContentsDebuggingEnabled(true);
@@ -44,7 +44,6 @@ public class VueMorph extends LinearLayout {
         webSettings.setJavaScriptEnabled(true);
 
         webView.loadUrl("http://10.0.2.2:8080/#/");
-//        webView.loadUrl("file:///android_asset/index.html");
     }
 
     /**

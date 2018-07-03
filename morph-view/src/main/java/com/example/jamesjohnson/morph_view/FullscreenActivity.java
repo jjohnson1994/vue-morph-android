@@ -2,6 +2,7 @@ package com.example.jamesjohnson.morph_view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.jamesjohnson.vuemorph.VueMorph;
 
