@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -29,11 +30,17 @@ public class ButtonWidget extends AppCompatButton implements NativeButtonWidget 
     }
 
     public void update(JSONObject description) {
+        try {
+            String uid = description.getString("uid");
+            this.setId(Integer.parseInt(uid));
+            this.uid = uid;
 
-    }
+            String text = description.getString("text");
+            this.setText(text);
 
-    public void setUid(String _uid) {
-        uid = _uid;
+            JSONObject styles = description.getJSONObject("styles");
+            this.setStyles(styles);
+        } catch (JSONException e) { }
     }
 
     public void setText(String text) {

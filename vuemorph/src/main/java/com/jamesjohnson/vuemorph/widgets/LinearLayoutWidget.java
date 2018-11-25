@@ -22,12 +22,14 @@ public class LinearLayoutWidget extends LinearLayout implements NativeWidget {
         super.setOrientation(LinearLayout.VERTICAL);
     }
 
-    public void setUid(String uid) {
-
-    }
-
     public void update(JSONObject description) {
+        try {
+            String uid = description.getString("uid");
+            this.setId(Integer.parseInt(uid));
 
+            JSONObject styles = description.getJSONObject("styles");
+            this.setStyles(styles);
+        } catch (JSONException e) { }
     }
 
     public void setStyles(JSONObject styles) {

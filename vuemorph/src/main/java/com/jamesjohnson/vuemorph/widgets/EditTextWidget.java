@@ -48,11 +48,17 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
     }
 
     public void update(JSONObject description) {
+        try {
+            String uid = description.getString("uid");
+            this.setId(Integer.parseInt(uid));
+            this.uid = uid;
 
-    }
+            String text = description.getString("text");
+            this.setText(text);
 
-    public void setUid(String _uid) {
-        uid = _uid;
+            JSONObject styles = description.getJSONObject("styles");
+            this.setStyles(styles);
+        } catch (JSONException e) { }
     }
 
     public void setText(String value) {

@@ -1,7 +1,5 @@
 package com.jamesjohnson.vuemorph;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +13,7 @@ import com.jamesjohnson.vuemorph.widgets.CheckBoxWidget;
 import com.jamesjohnson.vuemorph.widgets.EditTextWidget;
 import com.jamesjohnson.vuemorph.widgets.LinearLayoutWidget;
 import com.jamesjohnson.vuemorph.widgets.NativeWidget;
-import com.jamesjohnson.vuemorph.widgets.RadioButtonWidget;
+import com.jamesjohnson.vuemorph.widgets.RadioGroupWidget;
 import com.jamesjohnson.vuemorph.widgets.ScrollViewWidget;
 import com.jamesjohnson.vuemorph.widgets.TextViewWidget;
 import com.jamesjohnson.vuemorph.widgets.ButtonWidget;
@@ -78,80 +76,41 @@ public class VueMorph extends LinearLayout {
             return;
         }
 
-        // Get the uid
-        String uid = null;
-
-        try {
-            uid = app.getString("uid");
-        } catch (JSONException e) {
-            Log.e("drawFullApp", "Could not get uid" + e);
-        }
-
-        // Get Styles
-        JSONObject styles = null;
-
-        try {
-            styles = app.getJSONObject("styles");
-        } catch (JSONException e) {
-            Log.e("Error getting styles", "Could not get styles on tag" + tag + " " + e);
-        }
-
-        // Get Text
-        String text = null;
-
-        try {
-            text = app.getString("text");
-        } catch (JSONException e) {
-            Log.e("Error getting text", "error: " + e);
-        }
-
         // Create a new View based on the tag name
         View newView;
-
-        Log.d("got tag", "text: " + text);
 
         switch (tag.toUpperCase()) {
             case "LINEARLAYOUT":
                 newView = new LinearLayoutWidget(this.getContext());
+                ((LinearLayoutWidget) newView).update(app);
                 break;
             case "SCROLLVIEW":
                 newView = new ScrollViewWidget(this.getContext());
+                ((ScrollViewWidget) newView).update(app);
                 break;
             case "TEXTVIEW":
                 newView = new TextViewWidget(this.getContext());
-                ((TextViewWidget) newView).setText(text);
+                ((TextViewWidget) newView).update(app);
                 break;
             case "BTN":
                 newView = new ButtonWidget(this.getContext(), webView);
-                ((ButtonWidget) newView).setText(text);
+                ((ButtonWidget) newView).update(app);
                 break;
             case "EDITTEXT":
                 newView = new EditTextWidget(this, webView);
                 break;
             case "CHECKBOX":
                 newView = new CheckBoxWidget(this.getContext(), webView);
-                ((CheckBoxWidget) newView).setText(text);
-                break;
-            case "RADIOBUTTON":
-                newView = new RadioButtonWidget(this.getContext(), webView);
-                ((RadioButtonWidget) newView).setText(text);
+                ((CheckBoxWidget) newView).update(app);
                 break;
             case "RADIOGROUP":
-                newView = new RadioButtonWidget.RadioGroupWidget(this.getContext());
+                newView = new RadioGroupWidget(this, webView);
+                ((RadioGroupWidget) newView).update(app);
                 break;
             default:
                 newView = new TextViewWidget(this.getContext());
                 ((TextView) newView).setText("No Matching Components for Tag");
         }
-
-        // Set styles on View
-        if (styles != null) {
-            ((NativeWidget) newView).setStyles(styles);
-        }
-
-        // Set uid
-        ((NativeWidget) newView).setUid(uid);
-        newView.setId(Integer.parseInt(uid));
 
         // Add the new View to the correct ViewGroup
         if (parent != null) {
@@ -168,9 +127,21 @@ public class VueMorph extends LinearLayout {
             for (int i = 0; i < children.length(); i++) {
                 drawFullApp(children.getJSONObject(i), (ViewGroup) newView);
             }
-        } catch (JSONException e) {
-            Log.e("drawFullApp", "Could not get children" + e);
-        }
+        } catch (JSONException e) { }
+    }
+
+    public void removeWidget(final Integer uid) {
+        Log.d("RemoveWidget", "Remove Widget, " + uid);
+            this.runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        View view = findViewById(uid);
+                        ((ViewGroup) view.getParent()).removeView(view);
+                    }
+                    catch(NullPointerException exception) { }
+                }
+            });
     }
 
     public void runOnUIThread(Runnable run) {
@@ -181,17 +152,6 @@ public class VueMorph extends LinearLayout {
         runOnUIThread(new Runnable() {
             public void run() {
                 viewGroup.addView(view);
-            }
-        });
-    }
-
-    // Clear app layout
-    public void clear() {
-        runOnUIThread(new Runnable() {
-            public void run() {
-                if (appLayout.getChildCount() > 0) {
-                    appLayout.removeAllViews();
-                }
             }
         });
     }

@@ -17,17 +17,17 @@ public class TextViewWidget extends AppCompatTextView implements NativeTextWidge
         super(context);
     }
 
-    public void setUid(String uid) {
-
-    }
-
     public void update(JSONObject description) {
-        Log.d("Text Widget", "Update");
         try {
-            this.setText(description.getString("text"));
-        } catch (JSONException e) {
-            Log.e("Text Widget", "Update JSON Error" + e);
-        }
+            String uid = description.getString("uid");
+            this.setId(Integer.parseInt(uid));
+
+            String text = description.getString("text");
+            this.setText(text);
+
+            JSONObject styles = description.getJSONObject("styles");
+            this.setStyles(styles);
+        } catch (JSONException e) { }
     }
 
     public void setText(String text) {

@@ -1,5 +1,7 @@
 package com.jamesjohnson.vuemorph.widgets;
 
+import android.view.View;
+
 import org.json.JSONObject;
 
 /**
@@ -7,7 +9,6 @@ import org.json.JSONObject;
  */
 
 public interface NativeWidget {
-    public void setUid(String uid);
     public void setStyles(JSONObject styles);
     public void update(JSONObject description);
 }

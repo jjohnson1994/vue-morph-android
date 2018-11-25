@@ -31,22 +31,20 @@ public class CheckBoxWidget extends AppCompatCheckBox implements NativeInputWidg
 
     public void update(JSONObject description) {
         try {
+            String uid = description.getString("uid");
+            this.setId(Integer.parseInt(uid));
+            this.uid = uid;
 
-            Log.d("Checkbox", "Got description " + description.toString());
             String text = description.getString("text");
+            this.setText(text);
+
             String _checked  = description.getString("checked");
             Boolean checked = Boolean.parseBoolean(_checked);
-
-            Log.d("Checkbox", "Got new text " + text);
-            this.setText(text);
             this.setChecked(checked);
-        } catch (JSONException e) {
-            Log.d("Checkbox", "Error Reading Description " + e);
-        }
-    }
 
-    public void setUid(String _uid) {
-        uid = _uid;
+            JSONObject styles = description.getJSONObject("styles");
+            this.setStyles(styles);
+        } catch (JSONException e) { }
     }
 
     public void setText(String text) {
