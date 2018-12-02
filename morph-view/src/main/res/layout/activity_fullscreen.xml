@@ -6,4 +6,5 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context="com.example.jamesjohnson.morph_view.FullscreenActivity">
+
 </LinearLayout>

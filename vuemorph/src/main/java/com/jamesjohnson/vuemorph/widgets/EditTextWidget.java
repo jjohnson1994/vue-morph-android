@@ -25,7 +25,7 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
     private String uid;
     private VueMorph vueMorph;
 
-    public EditTextWidget(VueMorph vueMorph, final WebView webView) {
+    public EditTextWidget(final VueMorph vueMorph, final WebView webView) {
         super(vueMorph.getContext());
         this.vueMorph = vueMorph;
 
@@ -41,24 +41,36 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                webView.loadUrl("javascript:dispatchOnChange('" + uid + ", " + EditTextWidget.this.getText().toString() + "');");
+            public void afterTextChanged(final Editable s) {
+                vueMorph.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("EDIT TEXT WIDGET", "sequence" + s.toString());
+                        webView.loadUrl("javascript:dispatchOnChange('" + uid + ", " + EditTextWidget.this.getText().toString() + "');");
+                    }
+                });
             }
         });
     }
 
     public void update(JSONObject description) {
+        Log.d("EdiTextWidget", "updaging edit text");
         try {
             String uid = description.getString("uid");
             this.setId(Integer.parseInt(uid));
             this.uid = uid;
+            Log.d("EditTextWidget", "settings uid " + uid);
 
             String text = description.getString("text");
             this.setText(text);
+            this.setSelection(text.length());
+
 
             JSONObject styles = description.getJSONObject("styles");
             this.setStyles(styles);
-        } catch (JSONException e) { }
+        } catch (JSONException e) {
+            Log.e("EditTextWidget", "" + e);
+        }
     }
 
     public void setText(String value) {

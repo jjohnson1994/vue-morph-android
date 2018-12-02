@@ -98,6 +98,7 @@ public class VueMorph extends LinearLayout {
                 break;
             case "EDITTEXT":
                 newView = new EditTextWidget(this, webView);
+                ((EditTextWidget) newView).update(app);
                 break;
             case "CHECKBOX":
                 newView = new CheckBoxWidget(this.getContext(), webView);
