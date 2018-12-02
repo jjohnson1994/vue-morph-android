@@ -48,7 +48,6 @@ public class CheckBoxWidget extends AppCompatCheckBox implements NativeInputWidg
     }
 
     public void setText(String text) {
-        Log.d("Set Text", text);
         super.setText(text);
     }
 

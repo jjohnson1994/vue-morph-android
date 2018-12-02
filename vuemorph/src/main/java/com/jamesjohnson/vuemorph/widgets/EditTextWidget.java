@@ -45,7 +45,6 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
                 vueMorph.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("EDIT TEXT WIDGET", "sequence" + s.toString());
                         webView.loadUrl("javascript:dispatchOnChange('" + uid + ", " + EditTextWidget.this.getText().toString() + "');");
                     }
                 });
@@ -54,12 +53,10 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
     }
 
     public void update(JSONObject description) {
-        Log.d("EdiTextWidget", "updaging edit text");
         try {
             String uid = description.getString("uid");
             this.setId(Integer.parseInt(uid));
             this.uid = uid;
-            Log.d("EditTextWidget", "settings uid " + uid);
 
             String text = description.getString("text");
             this.setText(text);
@@ -74,7 +71,6 @@ public class EditTextWidget extends AppCompatEditText implements NativeInputWidg
     }
 
     public void setText(String value) {
-        Log.d("Set Value", value);
         super.setText(value);
     }
 

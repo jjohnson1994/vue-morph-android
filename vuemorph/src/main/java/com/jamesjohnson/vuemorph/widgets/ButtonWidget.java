@@ -44,7 +44,6 @@ public class ButtonWidget extends AppCompatButton implements NativeButtonWidget 
     }
 
     public void setText(String text) {
-        Log.d("Set Text", text);
         super.setText(text);
     }
 
