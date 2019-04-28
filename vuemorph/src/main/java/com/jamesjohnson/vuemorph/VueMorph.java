@@ -1,13 +1,21 @@
 package com.jamesjohnson.vuemorph;
 
+import android.content.Context;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jamesjohnson.vuemorph.widgets.CheckBoxWidget;
 import com.jamesjohnson.vuemorph.widgets.EditTextWidget;
@@ -22,10 +30,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class VueMorph extends LinearLayout {
     LinearLayout appLayout;
     WebView webView;
     AppCompatActivity context;
+
+    NavigationView sideNavNavigationView;
+    Context sideNavContext;
+    HashMap<String, String> titleRoutes;
 
     public VueMorph(AppCompatActivity context) {
         super(context);
@@ -46,12 +60,11 @@ public class VueMorph extends LinearLayout {
 
     /**
      * Draw the apps layout based on the JSON from the WebView.
-     * @param app JSON describing the layout
+     *
+     * @param app    JSON describing the layout
      * @param parent The parent ViewGroup to add any Views to
      */
     public void drawFullApp(JSONObject app, ViewGroup parent) {
-        Log.d("drawFullApp", app.toString());
-
         // Get the name of the tag
         String tag = null;
 
@@ -65,7 +78,6 @@ public class VueMorph extends LinearLayout {
             try {
                 JSONArray children = app.getJSONArray("children");
 
-                Log.d("Tag has x children", tag + " " + children.length());
                 for (int i = 0; i < children.length(); i++) {
                     drawFullApp(children.getJSONObject(i), null);
                 }
@@ -124,25 +136,24 @@ public class VueMorph extends LinearLayout {
         try {
             JSONArray children = app.getJSONArray("children");
 
-            Log.d("Tag has x children", tag + " " + children.length());
             for (int i = 0; i < children.length(); i++) {
                 drawFullApp(children.getJSONObject(i), (ViewGroup) newView);
             }
-        } catch (JSONException e) { }
+        } catch (JSONException e) {
+        }
     }
 
     public void removeWidget(final Integer uid) {
-        Log.d("RemoveWidget", "Remove Widget, " + uid);
-            this.runOnUIThread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        View view = findViewById(uid);
-                        ((ViewGroup) view.getParent()).removeView(view);
-                    }
-                    catch(NullPointerException exception) { }
+        this.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    View view = findViewById(uid);
+                    ((ViewGroup) view.getParent()).removeView(view);
+                } catch (NullPointerException exception) {
                 }
-            });
+            }
+        });
     }
 
     public void runOnUIThread(Runnable run) {
@@ -153,6 +164,54 @@ public class VueMorph extends LinearLayout {
         runOnUIThread(new Runnable() {
             public void run() {
                 viewGroup.addView(view);
+            }
+        });
+    }
+
+    public void setSideNavNavigationView(Context context, final NavigationView listView) {
+        sideNavContext = context;
+        sideNavNavigationView = listView;
+
+        sideNavNavigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    // set item as selected to persist highlight
+                    Log.d("menu item clicked", "" + menuItem.getTitle());
+                    String title = String.valueOf(menuItem.getTitle());
+                    String route = titleRoutes.get("Page Two");
+                    Log.d("menu item clicked", "" + route);
+                    // TODO close drawer when item is tapped
+                    for (String i : titleRoutes.keySet()) {
+                        System.out.println("key: " + i + " value: " + titleRoutes.get(i));
+                    }
+
+                    return true;
+                }
+            }
+        );
+    }
+
+    public void setSideNavListItems(final JSONArray jsonItemsArray) {
+        final Menu menu = sideNavNavigationView.getMenu();
+        titleRoutes = new HashMap<>();
+
+        runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    menu.clear();
+
+                    for (int i = 0; i < jsonItemsArray.length(); i++) {
+                        JSONObject navItemObject = jsonItemsArray.getJSONObject(i);
+                        String navItemTitle = navItemObject.getString("title");
+                        String navItemRoute = navItemObject.getString("route");
+
+                        menu.add(navItemTitle);
+                        titleRoutes.put(navItemTitle, navItemRoute);
+                    }
+                } catch (JSONException e) {
+                }
             }
         });
     }

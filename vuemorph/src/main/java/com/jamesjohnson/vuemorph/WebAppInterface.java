@@ -5,12 +5,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jamesjohnson.vuemorph.widgets.NativeWidget;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by jamesjohnson on 15/06/2018.
@@ -53,10 +58,9 @@ public class WebAppInterface {
                 vueMorph.drawFullApp(description, (ViewGroup) context.findViewById(parent));
             }
         } catch (JSONException e) {
-            Log.d("WebAppInterface", "Could not get description: " + e);
+            Log.e("WebAppInterface", "Could not get description: " + e);
         }
     }
-
 
     @JavascriptInterface
     public void onComponentDestroyed(String _description) {
@@ -66,7 +70,18 @@ public class WebAppInterface {
             Integer widgetId = description.getInt("uid");
             vueMorph.removeWidget(widgetId);
         } catch (JSONException e) {
-            Log.d("WebAppInterface", "Could not get description: " + e);
+            Log.e("WebAppInterface", "Could not get description: " + e);
+        }
+    }
+
+    @JavascriptInterface
+    public void setSideNavItems(String _items) {
+        Log.d("WebAppInterface", "Settings Side Nav Items: " + _items);
+        try {
+            JSONArray jsonItemsArray = new JSONArray(_items);
+            vueMorph.setSideNavListItems(jsonItemsArray);
+        } catch (JSONException e) {
+            Log.e("WebAppInterface", "Could not get Side Nav Items" + e);
         }
     }
 }
